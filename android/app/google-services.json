@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "129108821131",
+    "project_id": "fir-cubit-project",
+    "storage_bucket": "fir-cubit-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129108821131:android:1f210c2f692ea34869408e",
+        "android_client_info": {
+          "package_name": "com.example.firebase_cubit_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDa1B-2w3M166oQvcAnUhsres7CKZp60c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
