@@ -1,5 +1,9 @@
 import 'package:firebase_cubit_project/di/module.dart';
+import 'package:firebase_cubit_project/main.dart';
+import 'package:firebase_cubit_project/util/context_extension.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FirebaseMessageService {
@@ -33,7 +37,14 @@ class FirebaseMessageService {
     InitializationSettings initializationSettings = InitializationSettings(
         android: androidInitializationSettings,
         iOS: darwinInitializationSettings);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: (details) {
+      if (GlobalNotificationHandler.remoteMessage?.data['data'] != null) {
+        navigateToPage(GlobalNotificationHandler.remoteMessage!.data['data']);
+      }
+    },
+        onDidReceiveBackgroundNotificationResponse:
+            _onTapBackgroundNotification);
   }
 
   Future<void> setupLocalNotificationDetails() async {
@@ -76,4 +87,21 @@ class FirebaseMessageService {
         ?.requestNotificationsPermission();
     return permissionGranted ?? false;
   }
+}
+
+void _onTapBackgroundNotification(NotificationResponse details) {
+  if (GlobalNotificationHandler.remoteMessage?.data['data'] != null) {
+    navigateToPage(GlobalNotificationHandler.remoteMessage!.data['data']);
+  }
+}
+
+void navigateToPage(data) {
+  if (data is String) {
+    print(data);
+    navigationState.currentContext?.navigateTo('/item', args: data);
+  }
+}
+
+class GlobalNotificationHandler {
+  static RemoteMessage? remoteMessage;
 }

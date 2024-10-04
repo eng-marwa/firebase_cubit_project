@@ -26,6 +26,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+GlobalKey<NavigatorState> navigationState = GlobalKey();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -43,6 +45,7 @@ class MyApp extends StatelessWidget {
               create: (context) => getIt<NotificationCubit>()),
         ],
         child: MaterialApp(
+          navigatorKey: navigationState,
           title: 'Flutter Demo',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

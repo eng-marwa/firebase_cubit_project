@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class NotificationCubit extends Cubit<NotificationState> {
   NotificationCubit() : super(NotificationInitial()) {
     initialize();
+    //handle push notifications
     handleForegroundNotification();
     handleBackgroundNotification();
   }
@@ -15,6 +16,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> initialize() async {
     bool permission = await FirebaseMessageService().getPermission();
     if (permission) {
+      //handle local notification
       showNotification();
     } else {
       emit(NotificationError('Permission not granted'));
@@ -58,8 +60,8 @@ class NotificationCubit extends Cubit<NotificationState> {
   }
 
   void _handleNotification(RemoteMessage message) {
-    print('Handling a message: ${message.notification!.body!}');
     if (message.notification != null) {
+      GlobalNotificationHandler.remoteMessage = message;
       emit(NotificationReceived(message));
     }
     if (message.data.isNotEmpty) {
@@ -69,5 +71,6 @@ class NotificationCubit extends Cubit<NotificationState> {
 }
 
 Future<void> _backgroundHandler(RemoteMessage message) async {
+  GlobalNotificationHandler.remoteMessage = message;
   getIt<NotificationCubit>()._handleNotification(message);
 }

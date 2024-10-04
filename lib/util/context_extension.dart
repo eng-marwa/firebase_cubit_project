@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 extension ContextExtension on BuildContext {
   void navigateTo(String routeName, {Object? args}) {
+    print(args);
     Future.microtask(
         () => Navigator.pushNamed(this, routeName, arguments: args));
   }

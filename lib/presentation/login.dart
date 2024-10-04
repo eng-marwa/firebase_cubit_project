@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 ElevatedButton(
                   child: const Text('Login'),
-                  onPressed: () => _login('marwa@gmail.com', '123456'),
+                  onPressed: () => _login('marwax@gmail.com', '123456'),
                 ),
                 const SizedBox(
                   height: 120,
